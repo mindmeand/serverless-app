@@ -21,7 +21,7 @@ api = Api(app)
 
 # 유저 관련
 api.add_resource(UserRegisterResource, '/user/register')
-api.add_resource(UserLoginResource, '/user/login')
+api.add_resource(UserLoginResource, '/user/login/1')
 api.add_resource(UserLogoutResource, '/user/logout')
 
 api.add_resource(UserInfoResource, '/user/info')
