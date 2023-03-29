@@ -23,6 +23,7 @@ api = Api(app)
 api.add_resource(UserRegisterResource, '/user/register')
 api.add_resource(UserLoginResource, '/user/login')
 api.add_resource(UserLogoutResource, '/user/logout')
+
 api.add_resource(UserInfoResource, '/user/info')
 
 
