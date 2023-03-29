@@ -13,3 +13,4 @@ certifi
 chardet
 idna
 urllib3
+cchardet
