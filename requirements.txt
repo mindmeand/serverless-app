@@ -9,3 +9,5 @@ flask-jwt-extended
 email-validator
 openai
 cchardet
+pandas
+numpy
