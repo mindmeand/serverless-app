@@ -8,3 +8,8 @@ passlib
 Flask-jwt-extended
 email-validator
 openai
+requests
+certifi
+chardet
+idna
+urllib3
