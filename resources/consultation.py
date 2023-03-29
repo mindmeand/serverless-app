@@ -37,7 +37,7 @@ class ConsultationResource(Resource) :
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": system_message},
-                {"role": "user", "content": content}
+                {"role": "user", "content": content+" 한국어 100자 안으로 답변해줘. "}
             ]
         )
 
@@ -65,7 +65,7 @@ class ConsultationResource(Resource) :
             connection.close()
             return{'error':str(e)},500
         
-        return {'result':'success'},200
+        return {'result':'success','question' : content,'answer': response_message },200
 
 
 # 질문 히스토리 가져오기
