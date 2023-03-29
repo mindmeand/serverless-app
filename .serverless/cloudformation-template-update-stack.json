@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-mindmeand-serverless/dev/1680070649699-2023-03-29T06:17:29.699Z/aws-mindmeand-serverless.zip"
+          "S3Key": "serverless/aws-mindmeand-serverless/dev/1680072891360-2023-03-29T06:54:51.360Z/aws-mindmeand-serverless.zip"
         },
         "Handler": "wsgi_handler.handler",
         "Runtime": "python3.9",
@@ -180,14 +180,14 @@
         "ApiLogGroup"
       ]
     },
-    "ApiLambdaVersionPvn1nFnQdlxi6gjAp9H9giprXmjaOlblCUacM8dEc": {
+    "ApiLambdaVersionGggfzHIzxe1DfUFtXtCyAbgfmjJuAAREICJzeHACkFE": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "n7aRt3DQPBuinVXr+cNfcnIjsZKZxbNoA4N+4IQPeHM="
+        "CodeSha256": "CJNuygotAXD9IZMFp3ChyC381n7kdYD79/ZHVIyIkXc="
       }
     },
     "HttpApi": {
@@ -298,7 +298,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersionPvn1nFnQdlxi6gjAp9H9giprXmjaOlblCUacM8dEc"
+        "Ref": "ApiLambdaVersionGggfzHIzxe1DfUFtXtCyAbgfmjJuAAREICJzeHACkFE"
       },
       "Export": {
         "Name": "sls-aws-mindmeand-serverless-dev-ApiLambdaFunctionQualifiedArn"

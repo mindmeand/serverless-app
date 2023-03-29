@@ -8,6 +8,3 @@ passlib
 flask-jwt-extended
 email-validator
 openai
-cchardet
-PyJWT
-openai-connector
