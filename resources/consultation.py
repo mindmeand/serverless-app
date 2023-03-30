@@ -115,6 +115,45 @@ class ConsultationHistoryResource(Resource):
     
 
 
+# 히스토리 삭제
+class DeleteHistoryResource(Resource):
+
+    @jwt_required()
+
+    def delete(self, id) :
+
+        userId = get_jwt_identity()
+
+
+        try :
+            connection = get_connection()
+
+            query = '''delete from consultation
+                    where userId = %s and id=%s;'''
+            
+
+            cursor = connection.cursor()
+            
+            record = (userId,id)
+
+            cursor.execute(query,record)
+            
+            connection.commit()
+            
+
+            cursor.close()
+            connection.close()
+
+        except Error as e:
+            print(e)
+            cursor.close()
+            connection.close()
+
+            return{"result" : "fail", "error" : str(e)}, 500
+        
+        return {"result" : "success"} ,200
+
+
 
 
 
