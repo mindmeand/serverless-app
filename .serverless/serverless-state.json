@@ -174,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-mindmeand-serverless/dev/1680149132815-2023-03-30T04:05:32.815Z/aws-mindmeand-serverless.zip"
+                "S3Key": "serverless/aws-mindmeand-serverless/dev/1680160799679-2023-03-30T07:19:59.679Z/aws-mindmeand-serverless.zip"
               },
               "Handler": "wsgi_handler.handler",
               "Runtime": "python3.9",
@@ -192,14 +192,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionzPTZI4N7xijuNL5jUW6WQcqKl0TbNZiDYC8imsERLs": {
+          "ApiLambdaVersionHdXen3CGbCSEqEU3LZvd4MPz4MjHNdMo07vufLd3liY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "pZvHd2liLnSsZq81yImMhCYp4VbPQ8j8wbNT47n3WLk="
+              "CodeSha256": "b44zNxuwe/GepjYpPSzWGU61HGr41xJbSwqZjDF9H1s="
             }
           },
           "HttpApi": {
@@ -307,7 +307,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionzPTZI4N7xijuNL5jUW6WQcqKl0TbNZiDYC8imsERLs"
+              "Ref": "ApiLambdaVersionHdXen3CGbCSEqEU3LZvd4MPz4MjHNdMo07vufLd3liY"
             },
             "Export": {
               "Name": "sls-aws-mindmeand-serverless-dev-ApiLambdaFunctionQualifiedArn"
@@ -458,7 +458,7 @@
         "timeout": 6,
         "runtime": "python3.9",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersionzPTZI4N7xijuNL5jUW6WQcqKl0TbNZiDYC8imsERLs"
+        "versionLogicalId": "ApiLambdaVersionHdXen3CGbCSEqEU3LZvd4MPz4MjHNdMo07vufLd3liY"
       }
     },
     "configValidationMode": "warn",
@@ -484,7 +484,7 @@
     "artifact": "C:\\Users\\-\\Documents\\github\\serverless-app\\.serverless\\aws-mindmeand-serverless.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-mindmeand-serverless/dev/1680149132815-2023-03-30T04:05:32.815Z",
+    "artifactDirectoryName": "serverless/aws-mindmeand-serverless/dev/1680160799679-2023-03-30T07:19:59.679Z",
     "artifact": "aws-mindmeand-serverless.zip"
   }
 }

@@ -37,7 +37,7 @@ class ConsultationResource(Resource) :
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": system_message},
-                {"role": "user", "content": content+" 한국어 100자 안으로 답변해줘. "}
+                {"role": "user", "content": content+" 한국어 180자 안으로 답변해줘. "}
             ]
         )
 
