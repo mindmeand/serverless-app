@@ -170,6 +170,7 @@ class UserInfoResource(Resource) :
 
         try :
             connection = get_connection()
+            connection.begin()
 
             query = ''' update user
                     set
@@ -190,6 +191,7 @@ class UserInfoResource(Resource) :
             connection.close()
 
         except Error as e :
+            connection.rollback()
             print(e)
             cursor.close()
             connection.close()

@@ -48,6 +48,7 @@ class ConsultationResource(Resource) :
         # DB에 저장
         try : 
             connection = get_connection()
+            connection.begin()
             query = '''insert into consultation
                     (userId,question,answer,type)
                     values
@@ -60,6 +61,7 @@ class ConsultationResource(Resource) :
             connection.close()
 
         except Error as e :
+            connection.rollback()
             print(e)
             cursor.close()
             connection.close()
@@ -127,6 +129,7 @@ class DeleteHistoryResource(Resource):
 
         try :
             connection = get_connection()
+            connection.begin()
 
             query = '''delete from consultation
                     where userId = %s and id=%s;'''
@@ -145,6 +148,7 @@ class DeleteHistoryResource(Resource):
             connection.close()
 
         except Error as e:
+            connection.rollback()
             print(e)
             cursor.close()
             connection.close()
