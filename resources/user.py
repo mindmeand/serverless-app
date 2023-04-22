@@ -46,14 +46,15 @@ class UserRegisterResource(Resource) :
 
             user_id = cursor.lastrowid
 
-            cursor.close()
-            connection.close()
+
 
         except Error as e :
             print(e)
+            return {"error" : str(e)}, 500
+
+        finally:
             cursor.close()
             connection.close()
-            return {"error" : str(e)}, 500
 
         access_token = create_access_token(user_id)
         return {"result" : "success", "access_token" : access_token}, 200
@@ -90,14 +91,16 @@ class UserLoginResource(Resource) :
                 result_list[i]['updatedAt'] = row['updatedAt'].isoformat()
                 i = i + 1
 
-            cursor.close()
-            connection.close()
+
 
         except Error as e :
             print(e)
+
+            return {"error" : str(e)}, 500
+        
+        finally:
             cursor.close()
             connection.close()
-            return {"error" : str(e)}, 500
 
 
         check = check_password( data['password'], result_list[0]['password'] )
@@ -143,13 +146,16 @@ class UserInfoResource(Resource) :
 
             result_list = cursor.fetchall()
 
-            cursor.close()
-            connection.close()
 
         except Error as e :
             print(e)
+
+
+        finally:
             cursor.close()
             connection.close()
+
+        
 
             return {"result" : "fail", "error" : str(e)}, 500
 
@@ -187,14 +193,15 @@ class UserInfoResource(Resource) :
 
             connection.commit()
 
-            cursor.close()
-            connection.close()
+
 
         except Error as e :
             connection.rollback()
             print(e)
+        finally:
             cursor.close()
             connection.close()
+
             return {"result" : "fail", "error" : str(e)}, 500
 
         return {"result" : "success"}, 200

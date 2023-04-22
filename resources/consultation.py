@@ -57,15 +57,15 @@ class ConsultationResource(Resource) :
             cursor = connection.cursor()
             cursor.execute(query,record)
             connection.commit()
-            cursor.close()
-            connection.close()
+
 
         except Error as e :
             connection.rollback()
             print(e)
+            return{'error':str(e)},500
+        finally:
             cursor.close()
             connection.close()
-            return{'error':str(e)},500
         
         return {'result':'success','question' : content,'answer': response_message },200
 
@@ -103,15 +103,15 @@ class ConsultationHistoryResource(Resource):
                 resultList[i]['createdAt']=row['createdAt'].isoformat()
                 i = i+1
 
-            cursor.close()
-            connection.close()
 
         except Error as e:
             print(e)
-            cursor.close()
-            connection.close()
+
 
             return{"result" : "fail", "error" : str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
         
         return {"result" : "success", "result" : resultList,"count":len(resultList)} ,200
     
@@ -144,16 +144,15 @@ class DeleteHistoryResource(Resource):
             connection.commit()
             
 
-            cursor.close()
-            connection.close()
+
 
         except Error as e:
             connection.rollback()
             print(e)
+            return{"result" : "fail", "error" : str(e)}, 500
+        finally:
             cursor.close()
             connection.close()
-
-            return{"result" : "fail", "error" : str(e)}, 500
         
         return {"result" : "success"} ,200
 
