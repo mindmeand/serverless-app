@@ -205,3 +205,33 @@ class UserInfoResource(Resource) :
             return {"result" : "fail", "error" : str(e)}, 500
 
         return {"result" : "success"}, 200
+    
+    # 유저 정보 삭제 (회원 탈퇴)
+    @jwt_required()
+    def delete(self):
+        user_id = get_jwt_identity()
+
+        try:
+            connection = get_connection()
+            connection.begin()
+
+            query = '''DELETE FROM user
+                    WHERE id = %s;'''
+
+            record = (user_id,)
+
+            cursor = connection.cursor()
+
+            cursor.execute(query, record)
+
+            connection.commit()
+
+        except Error as e:
+            connection.rollback()
+            print(e)
+            return {"result": "fail", "error": str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
+
+        return {"result": "success"}, 200
