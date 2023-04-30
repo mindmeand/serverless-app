@@ -6,7 +6,7 @@ from mysql_connection import get_connection
 from mysql.connector import Error
 from email_validator import validate_email, EmailNotValidError
 from utils import check_password, hash_password
-
+import boto3
 # 회원가입
 class UserRegisterResource(Resource) :
     def post(self) :
@@ -235,3 +235,98 @@ class UserInfoResource(Resource) :
             connection.close()
 
         return {"result": "success"}, 200
+    
+# 회원정보 이미지
+class UserImageResource(Resource) :
+    # 이미지 등록
+    @jwt_required()
+    def put(self) :
+        # from=data
+        # photo : file
+
+        user_id = get_jwt_identity()
+
+        if 'photo' not in request.files :
+            return {'error' : '사진데이터 필수'}, 400
+        
+        file = request.files['photo']
+
+        if 'image' not in file.content_type :
+            return {'error' : '이미지 파일이 아닙니다.'}
+        
+        # 사진 S3에 저장
+        current_time = datetime.now()
+        new_file_name = current_time.isoformat().replace(':', '_') + '.jpg'
+        file.filename = new_file_name
+
+        client =  boto3.client('s3', aws_access_key_id= Config.ACCESS_KEY, aws_secret_access_key= Config.SECRET_ACCESS)
+
+        try :
+            client.upload_fileobj(file, Config.S3_BUCKET, new_file_name, ExtraArgs= {'ACL' : 'public-read', 'ContentType' : file.content_type})
+        
+        except Exception as e :
+            return {"error" : str(e)}, 500
+
+        # 저장된 사진의 imgUrl
+        imgUrl = Config.S3_LOCATION + new_file_name
+
+        # DB 저장
+        try :
+            connection = get_connection()
+
+            query = '''update user
+                    set
+                    userImgUrl = %s
+                    where id = %s;'''
+
+            record = (imgUrl, user_id)
+
+            cursor = connection.cursor()
+
+            cursor.execute(query, record)
+
+            connection.commit()
+
+            cursor.close()
+            connection.close()
+
+        except Error as e :
+            print(e)
+            cursor.close()
+            connection.close()
+
+            return {"error" : str(e)}, 500
+
+        return {"result" : "success"}, 200
+    
+    # 이미지 삭제
+    @jwt_required()
+    def delete(self) :
+        user_id = get_jwt_identity()
+
+        try :
+            connection = get_connection()
+
+            query = '''update user
+                    set
+                    userImgUrl = null
+                    where id = %s;'''
+
+            record = (user_id, )
+
+            cursor = connection.cursor()
+
+            cursor.execute(query, record)
+
+            connection.commit()
+
+            cursor.close()
+            connection.close()
+
+        except Error as e :
+            print(e)
+            cursor.close()
+            connection.close()
+            return {"result" : "fail", "error" : str(e)}, 500
+
+        return {"result" : "success"}, 200
