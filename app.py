@@ -2,7 +2,7 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from config import Config
-from resources.consultation import ConsultationHistoryResource, ConsultationResource, DeleteHistoryResource
+from resources.consultation import ConsultationHistoryResource, ConsultationResource, ConsultationSearchResource, DeleteHistoryResource
 from resources.user import UserImageResource, UserInfoResource, UserLoginResource, UserLogoutResource, UserRegisterResource
 from resources.user import jwt_blacklist
 
@@ -32,6 +32,7 @@ api.add_resource(ConsultationHistoryResource,'/consultation/my')
 
 # 상담 관련
 api.add_resource(ConsultationResource,'/consultation')
+api.add_resource(ConsultationSearchResource, '/consultation/search')
 
 if __name__ == '__main__' :
     app.run()

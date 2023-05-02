@@ -155,6 +155,40 @@ class DeleteHistoryResource(Resource):
             connection.close()
         
         return {"result" : "success"} ,200
+    
+# 검색 기능   
+class ConsultationSearchResource(Resource):
+    @jwt_required()
+    def get(self):
+        userId = get_jwt_identity()
+        keyword = request.args.get('keyword')
+
+        try:
+            connection = get_connection()
+
+            query = '''SELECT * FROM consultation
+                       WHERE userId = %s AND (question LIKE %s OR answer LIKE %s)
+                       ORDER BY createdAt DESC;'''
+
+            keyword_pattern = f'%{keyword}%'
+
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(query, (userId, keyword_pattern, keyword_pattern))
+
+            search_results = cursor.fetchall()
+
+            for idx, row in enumerate(search_results):
+                search_results[idx]['createdAt'] = row['createdAt'].isoformat()
+
+        except Error as e:
+            print(e)
+            return {"result": "fail", "error": str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
+
+        return {"result": "success", "searchResults": search_results, "count": len(search_results)}, 200
+
 
 
 
