@@ -173,7 +173,8 @@ class ConsultationSearchResource(Resource):
             keyword_pattern = f'%{keyword}%'
 
             cursor = connection.cursor(dictionary=True)
-            cursor.execute(query, (userId, keyword_pattern, keyword_pattern))
+            record=(userId, keyword_pattern, keyword_pattern)
+            cursor.execute(query, record)
 
             search_results = cursor.fetchall()
 
