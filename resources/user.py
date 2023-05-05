@@ -330,3 +330,42 @@ class UserImageResource(Resource) :
             return {"result" : "fail", "error" : str(e)}, 500
 
         return {"result" : "success"}, 200
+
+# 아이디찾기
+class UserIdSearchResource(Resource) :
+    def post(self) :
+        # { "name": "김이름,
+        # "phone": "010-1234-5678"}
+
+        data = request.get_json()
+
+        try :
+            connection = get_connection()
+
+            query = '''select email
+                    from user
+                    where name = %s and phone = %s ; '''
+
+            record = (data["name"], data["phone"])
+
+            cursor = connection.cursor(dictionary=True)
+
+            cursor.execute(query, record)
+
+            result_list = cursor.fetchall()
+
+            if len(result_list) == 0 :
+                return {"error" : "회원가입한 사람이 아닙니다"} , 400
+
+            
+
+        except Error as e:
+            print(e)
+            return {"result" : "fail", "error" : str(e)}, 500
+        finally:
+            cursor.close()
+            connection.close()
+        
+        email = result_list[0]["email"]
+
+        return {"result" : "success", "email" : email}, 200

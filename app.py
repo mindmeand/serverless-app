@@ -3,7 +3,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from config import Config
 from resources.consultation import ConsultationHistoryResource, ConsultationResource, ConsultationSearchResource, DeleteHistoryResource
-from resources.user import UserImageResource, UserInfoResource, UserLoginResource, UserLogoutResource, UserRegisterResource
+from resources.user import UserIdSearchResource, UserImageResource, UserInfoResource, UserLoginResource, UserLogoutResource, UserRegisterResource
 from resources.user import jwt_blacklist
 
 app = Flask(__name__)
@@ -24,6 +24,7 @@ api.add_resource(UserRegisterResource, '/user/register')
 api.add_resource(UserLoginResource, '/user/login')
 api.add_resource(UserLogoutResource, '/user/logout')
 api.add_resource(UserImageResource, '/user/image')
+api.add_resource(UserIdSearchResource,'/user/id/search')
 
 api.add_resource(UserInfoResource, '/user/info')
 api.add_resource(DeleteHistoryResource,'/consultation/<int:id>')
